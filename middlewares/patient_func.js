@@ -1,5 +1,6 @@
 
-const Patient = require('../model/userSchema')
+const Patient = require('../model/patientSchema')
+const bcrypt = require('bcrypt')
 
 const reg_patient = async (req, res)=>{
     const {health_id, name, age, contact_number, address, password} = req.body
@@ -19,8 +20,18 @@ const reg_patient = async (req, res)=>{
                 return res.status(404).json({err: "Patient already Exists"})
             }
             else{
-                const user = new Patient({health_id, name, age, contact_number, address, password})
-                await user.save()
+                //generatig new object
+                const patient = new Patient({health_id, name, age, contact_number, address, password})
+
+                //hashing the password
+
+                //generating salt
+                const salt = await bcrypt.genSalt(12)
+
+                //replacing password to hashed password
+                patient.password = await bcrypt.hash(patient.password, salt)
+
+                await patient.save()
                 res.status(200).json({message: "Patient registered Successfully"})
                 console.log("a item added to database.")
             }
@@ -32,4 +43,35 @@ const reg_patient = async (req, res)=>{
     } 
 }
 
-module.exports = reg_patient
+const login_patient = async (req, res) => {
+    const { health_id, password } = req.body
+
+    //check if fields are empty
+    if( !health_id || !password ){
+        return res.status(404).json({err:"Please fill the field"})
+    }
+    else{
+        try{
+            const existingPatient = await Patient.findOne({health_id : health_id})
+
+            if(existingPatient){
+                //checking password
+                const validPatient = await bcrypt.compare(password, existingPatient.password)
+                
+                if(validPatient){
+                    res.status(200).json({message:"Patient logged in successfully!"})
+                }else {
+                    res.status(400).json({ error: "Invalid Password" });
+                }
+            }
+            else{
+                res.status(404).json({err:"Patient does not exits!"})
+            }
+
+        }catch(err){
+            console.log(err)
+        }
+    }
+}
+
+module.exports = { reg_patient, login_patient }

@@ -1,8 +1,7 @@
 const express = require('express')
-const reg_patient = require('../middlewares/patient_func')
 const router = express.Router()
-const Patient = require('../model/userSchema')
-const reg_patient_func = require('../middlewares/patient_func')
+const Patient = require('../model/patientSchema')
+const { reg_patient, login_patient } = require('../middlewares/patient_func')
 
 
 
@@ -11,7 +10,9 @@ router.get('/', (req, res)=>{
 })
 
 
-router.post('/reg_patient', reg_patient_func)
+router.post('/reg_patient', reg_patient)
+
+router.post('/login_patient', login_patient)
 
 
 module.exports = router
