@@ -13,6 +13,11 @@ require('./db/conn')
 //this will route all urls
 app.use(require('./routes/router'))
 
+//in case url not found, this middleware will act
+app.use((req, res)=>{
+    res.status(400).send("Not Found!")
+})
+
 
 
 app.listen(PORT, ()=>{
