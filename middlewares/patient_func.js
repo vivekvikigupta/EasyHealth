@@ -65,7 +65,7 @@ const login_patient = async (req, res) => {
                 }
             }
             else{
-                res.status(404).json({err:"Patient does not exits!"})
+                res.status(404).json({err:"Patient not registered!"})
             }
 
         }catch(err){
