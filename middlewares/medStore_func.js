@@ -4,10 +4,10 @@ const bcrypt = require('bcrypt')
 
 
 const reg_medStore = async (req, res)=>{
-    const { license_num, storeName, storeOwner, contact_number, address, password } = req.body
+    const { license_num, storeName, storeOwner, email, contact_number, address, password } = req.body
 
     //check if any field are empty
-    if( !license_num || !storeName || !storeOwner || !contact_number || !address || !password ){
+    if( !license_num || !storeName || !storeOwner || !email || !contact_number || !address || !password ){
         res.status(404).json({err : "Please fill the field Property!"})
     }
     else{
@@ -22,7 +22,7 @@ const reg_medStore = async (req, res)=>{
             }
             else{
                 //generatig new object
-                const medstore = new medStore({ license_num, storeName, storeOwner, contact_number, address, password })
+                const medstore = new medStore({ license_num, storeName, storeOwner, email, contact_number, address, password })
 
                 //hashing the password
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require('validator')
 
 
 const medStoreSchema = {
@@ -13,6 +14,16 @@ const medStoreSchema = {
     storeOwner:{
         type: String,
         required: true
+    },
+    email:{
+        type: String,
+        required: true,
+        validate(value){
+            if(!validator.isEmail(value)){
+                throw new Error("invalid email!")
+            }
+        }
+
     },
     contact_number:{
         type: Number,
