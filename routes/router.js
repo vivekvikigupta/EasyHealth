@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const Patient = require('../model/patientSchema')
-const { reg_patient, login_patient } = require('../middlewares/patient_func')
-const { reg_doctor, login_doctor } = require('../middlewares/doctor_func')
-const { reg_medStore, login_medStore } = require('../middlewares/medStore_func')
+const { reg_patient, login_patient } = require('../controller/patient_func')
+const { reg_doctor, login_doctor } = require('../controller/doctor_func')
+const { reg_medStore, login_medStore } = require('../controller/medStore_func')
 
 
 
