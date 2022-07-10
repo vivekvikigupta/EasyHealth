@@ -14,7 +14,7 @@ require('./db/conn')
 
 //this will route all urls
 app.use(require('./routes/router'))
-
+app.use(require('./routes/data_routes'))
 //in case url not found, this middleware will act
 app.use((req, res)=>{
     res.status(400).send("Not Found!")
