@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const prescriptionSchema = {
+const prescriptionSchema = new mongoose.Schema({
     health_id : {
         type : Number,
         require : true
@@ -20,9 +20,10 @@ const prescriptionSchema = {
                     type : String
                 }
             }
-        ]
-}
+    ]
+    
+})
 
-const prescriptions = mongoose.model('prescription', prescriptionSchema)
+const prescription_model = mongoose.model('prescription', prescriptionSchema)
 
-module.exports = prescriptions
+module.exports = prescription_model

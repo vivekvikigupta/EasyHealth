@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 const patientSchema = new mongoose.Schema({
     health_id: {
-        type: String,
+        type: Number,
         required: true
     },
     name:{

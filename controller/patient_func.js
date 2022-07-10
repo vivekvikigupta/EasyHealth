@@ -14,7 +14,7 @@ const reg_patient = async (req, res)=>{
 
             //check for health_id , if it already exist
             const patientExist = await Patient.findOne({health_id: health_id})
-    
+            console.log(patientExist)
             //check if health_id already registered.
             if(patientExist){
                 return res.status(404).json({err: "Patient already Exists"})
