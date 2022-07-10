@@ -23,8 +23,8 @@ const add_prescription = async (req, res)=>{
             
             console.log("pahle se hi hai bhai")
 
-            // al_ex.prescriptions.push(prescription_data)
-            // al_ex.save(()=>{
+            // patient_pres_rec.prescriptions.push(prescription_data)
+            // patient_pres_rec.save(()=>{
             //     console.log("updated")
             // })
 

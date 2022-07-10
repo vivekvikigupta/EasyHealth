@@ -1,0 +1,9 @@
+const patient = require('../model/patientSchema')
+const getAll_patients = async(req, res)=>{
+    
+    const data = await patient.find()
+    console.log(data)
+    res.status(200).json(data)
+}
+
+module.exports = getAll_patients
