@@ -14,7 +14,7 @@ const reg_patient = async (req, res)=>{
 
             //check for health_id , if it already exist
             const patientExist = await Patient.findOne({health_id: health_id})
-    
+            console.log(patientExist)
             //check if health_id already registered.
             if(patientExist){
                 return res.status(404).json({err: "Patient already Exists"})
@@ -31,13 +31,16 @@ const reg_patient = async (req, res)=>{
                 //replacing password to hashed password
                 patient.password = await bcrypt.hash(patient.password, salt)
 
-                await patient.save()
+                await patient.save(()=>{
+                    console.log("patient added to database.")
+                })
                 res.status(200).json({message: "Patient registered Successfully"})
-                console.log("a item added to database.")
+                
             }
     
         }catch(err){
             console.log(err)
+            res.status(400).json({"error": err})
         }
     
     } 
@@ -70,6 +73,7 @@ const login_patient = async (req, res) => {
 
         }catch(err){
             console.log(err)
+            res.status(400).json({"error": err})
         }
     }
 }
