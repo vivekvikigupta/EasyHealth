@@ -31,13 +31,16 @@ const reg_patient = async (req, res)=>{
                 //replacing password to hashed password
                 patient.password = await bcrypt.hash(patient.password, salt)
 
-                await patient.save()
+                await patient.save(()=>{
+                    console.log("patient added to database.")
+                })
                 res.status(200).json({message: "Patient registered Successfully"})
-                console.log("a item added to database.")
+                
             }
     
         }catch(err){
             console.log(err)
+            res.status(400).json({"error": err})
         }
     
     } 
@@ -70,6 +73,7 @@ const login_patient = async (req, res) => {
 
         }catch(err){
             console.log(err)
+            res.status(400).json({"error": err})
         }
     }
 }
