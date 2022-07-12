@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const bodyparser = require('body-parser')
+const cookieparser = require('cookie-parser')
 
 //setting path to config file
 dotenv.config({path: './vars/config.env'})
@@ -8,6 +9,7 @@ dotenv.config({path: './vars/config.env'})
 const app = express()
 const PORT = process.env.PORT
 
+app.use(cookieparser())
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended : false}))
 require('./db/conn')

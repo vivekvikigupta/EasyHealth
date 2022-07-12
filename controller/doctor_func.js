@@ -1,6 +1,10 @@
 
 const Doctor = require('../model/doctorSchema')
 const bcrypt = require('bcrypt')
+const cookieparser = require('cookie-parser')
+const jwt = require('jsonwebtoken')
+
+const secret_key = process.env.secret_k
 
 const reg_doctor = async (req, res)=>{
     const { registration_num, name, speciality, contact_number, address, password } = req.body
@@ -59,7 +63,19 @@ const login_doctor = async (req, res) => {
                 const validDoctor = await bcrypt.compare(password, existingDoctor.password)
                 
                 if(validDoctor){
-                    res.status(200).json({message:"Doctor logged in successfully!"})
+                    //create a token
+                    const token = await jwt.sign(validDoctor, secret_key)
+                    console.log("token created")
+                    
+                    return res
+                        .cookie("doc_cookie", token, {
+                            httpOnly : true,
+                            expires: new Date(Date.now() + 25892000000)
+
+                        })
+                        .status(200)
+                        .json({message:"Doctor logged in successfully!"})
+                        
                 }else {
                     res.status(400).json({ error: "Invalid Password" });
                 }
