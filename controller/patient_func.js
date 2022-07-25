@@ -1,6 +1,7 @@
 
 const Patient = require('../model/patientSchema')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const reg_patient = async (req, res)=>{
     const {health_id, name, age, contact_number, address, password} = req.body
@@ -62,7 +63,16 @@ const login_patient = async (req, res) => {
                 const validPatient = await bcrypt.compare(password, existingPatient.password)
                 
                 if(validPatient){
-                    res.status(200).json({message:"Patient logged in successfully!"})
+                    const token = await jwt.sign(validPatient, process.env.secret_k)
+                    console.log("patient token created")
+
+                    return res
+                        .cookie('patient_cookie', token, {
+                            httpOnly : true,
+                            expires: new Date(Date.now() + 8640000) //expiry is for one day
+                        })
+                        .status(200)
+                        .json({message:"Patient logged in successfully!"})
                 }else {
                     res.status(400).json({ error: "Invalid Password" });
                 }

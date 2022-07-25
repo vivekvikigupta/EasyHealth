@@ -1,5 +1,6 @@
 const medStore = require('../model/medStoreSchema')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 
 
@@ -61,7 +62,18 @@ const login_medStore = async (req, res)=>{
                 const validmedStore = await bcrypt.compare(password, existingmedStore.password)
                 
                 if(validmedStore){
-                    res.status(202).json({message:"Store logged in successfully!"})
+
+                    //generating token
+                    const token = await jwt.sign(validmedStore, process.env.secret_k)
+                    console.log("medStore token created.")
+
+                    return res
+                        .cookie('medStore_cookie', token, {
+                            httpOnly : true,
+                            expires: new Date(Date.now() + 8640000) //expiry is for one day
+                        })
+                        .status(202)
+                        .json({message:"Store logged in successfully!"})
                 }else {
                     res.status(401).json({ error: "Invalid Password" });
                 }

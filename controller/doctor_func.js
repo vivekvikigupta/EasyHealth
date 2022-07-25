@@ -70,7 +70,7 @@ const login_doctor = async (req, res) => {
                     return res
                         .cookie("doc_cookie", token, {
                             httpOnly : true,
-                            expires: new Date(Date.now() + 25892000000)
+                            expires: new Date(Date.now() + 8640000) //expiry is for one day
 
                         })
                         .status(200)
