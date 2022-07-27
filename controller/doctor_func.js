@@ -65,7 +65,7 @@ const login_doctor = async (req, res) => {
                 if(validDoctor){
                     //create a token
                     const token = await jwt.sign(validDoctor, secret_key)
-                    console.log("token created")
+                    console.log("doctor token created")
                     
                     return res
                         .cookie("doc_cookie", token, {
