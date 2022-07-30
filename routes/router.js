@@ -8,7 +8,7 @@ const { reg_medStore, login_medStore } = require('../controller/medStore_func')
 
 
 router.get('/', (req, res)=>{
-    res.send("Hello from router server")
+    res.json("Hello from router server")
 })
 
 

@@ -10,7 +10,7 @@ const patient_pres_rec = async(req, res)=>{
         
         var pres_data = await pres_schema.find({health_id : hid})
         //filter prescriptio record in desc order
-        pres_data = await pres_data[0].prescriptions.sort((a,b) => a.date - b.date)//sortin using simplified for numeric (c/o Andre Figueiredo):
+        pres_data = await pres_data[0].prescriptions.sort((a,b) => a.date - b.date)//sorting using simplified for numeric (c/o Andre Figueiredo):
 
         //filter for prescriptions by only specific doctor
         if(doc_num){
