@@ -67,7 +67,7 @@ const login_patient = async (req, res) => {
                     console.log("patient token created")
 
                     return res
-                        .cookie('patient_cookie', token, {
+                        .cookie('jwttoken', token, {
                             httpOnly : true,
                             expires: new Date(Date.now() + 8640000) //expiry is for one day
                         })

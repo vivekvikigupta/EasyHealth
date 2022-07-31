@@ -68,7 +68,7 @@ const login_medStore = async (req, res)=>{
                     console.log("medStore token created.")
 
                     return res
-                        .cookie('medStore_cookie', token, {
+                        .cookie('jwttoken', token, {
                             httpOnly : true,
                             expires: new Date(Date.now() + 8640000) //expiry is for one day
                         })
