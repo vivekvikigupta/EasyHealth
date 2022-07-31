@@ -64,7 +64,7 @@ const login_medStore = async (req, res)=>{
                 if(validmedStore){
 
                     //generating token
-                    const token = await jwt.sign(validmedStore, process.env.secret_k)
+                    const token = await jwt.sign(existingmedStore.toJSON(), process.env.secret_k)
                     console.log("medStore token created.")
 
                     return res

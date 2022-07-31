@@ -64,7 +64,7 @@ const login_doctor = async (req, res) => {
                 
                 if(validDoctor){
                     //create a token
-                    const token = await jwt.sign(validDoctor, secret_key)
+                    const token = await jwt.sign(existingDoctor.toJSON(), secret_key)
                     console.log("doctor token created")
                     
                     return res

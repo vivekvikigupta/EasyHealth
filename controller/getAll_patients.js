@@ -10,7 +10,7 @@ const getAll_patients = async(req, res)=>{
         address : 1
     }
     const data = await patient.find({}, projection)
-    console.log(data)
+    //console.log(data)
     res.status(200).json(data)
 }
 

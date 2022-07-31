@@ -63,7 +63,7 @@ const login_patient = async (req, res) => {
                 const validPatient = await bcrypt.compare(password, existingPatient.password)
                 
                 if(validPatient){
-                    const token = await jwt.sign(validPatient, process.env.secret_k)
+                    const token = await jwt.sign(existingPatient.toJSON(), process.env.secret_k)
                     console.log("patient token created")
 
                     return res
