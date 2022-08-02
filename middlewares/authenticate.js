@@ -28,13 +28,11 @@ const Authenticate = (roles)=>{
                     //authorising to roles
                     if(roles.includes(role)){
                         console.log("You have permission")
-                        return res.status(200).json({msg : "authorised"})
                     }
                     else{
                         console.log("You don't have permission")
                         return res.status(401).json({msg : "Unauthorised user. Access Denied"})
                     }
-                    
                 }
             next()
             })

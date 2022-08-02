@@ -8,7 +8,7 @@ const Authenticate  = require('../middlewares/authenticate')
 
 
 router.post('/add_prescriptions',Authenticate(["doctor"]), add_prescriptions)
-router.get('/getAll_patients',Authenticate(["doctor"]), getAll_patients)
+router.get('/getAll_patients', getAll_patients)
 router.get('/patient_pres_rec/:hid',Authenticate(["doctor", "medical_store"]), patient_pres_rec )
 router.get('/patient_detail/:hid',Authenticate(["patient", "doctor"]), patient_detail )
 
