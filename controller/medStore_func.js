@@ -47,7 +47,9 @@ const reg_medStore = async (req, res)=>{
 }
 
 const login_medStore = async (req, res)=>{
-    const { license_num, password } = req.body
+    const { username, password } = req.body
+
+    const license_num = username;
 
     //check if fields are empty
     if( !license_num || !password ){
@@ -72,14 +74,14 @@ const login_medStore = async (req, res)=>{
                             httpOnly : true,
                             expires: new Date(Date.now() + 8640000) //expiry is for one day
                         })
-                        .status(202)
+                        .status(200)
                         .json({message:"Store logged in successfully!"})
                 }else {
                     res.status(401).json({ error: "Invalid Password" });
                 }
             }
             else{
-                res.status(404).json({err:"Store not registered!"})
+                res.status(404).json({error:"Store not registered!"})
             }
 
         }catch(err){

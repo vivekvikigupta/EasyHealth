@@ -48,11 +48,13 @@ const reg_patient = async (req, res)=>{
 }
 
 const login_patient = async (req, res) => {
-    const { health_id, password } = req.body
+    const { username, password } = req.body
+    //health_id used as username
+    const health_id = username
 
     //check if fields are empty
     if( !health_id || !password ){
-        return res.status(404).json({err:"Please fill the field"})
+        return res.status(404).json({error:"Please fill the field"})
     }
     else{
         try{
@@ -78,7 +80,7 @@ const login_patient = async (req, res) => {
                 }
             }
             else{
-                res.status(404).json({err:"Patient not registered!"})
+                res.status(404).json({ error:"Patient not registered!" })
             }
 
         }catch(err){
