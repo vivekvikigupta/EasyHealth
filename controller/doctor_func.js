@@ -21,7 +21,7 @@ const reg_doctor = async (req, res)=>{
     
             //check if registration_num already registered.
             if(doctorExists){
-                return res.status(404).json({err: "Doctor already Exists"})
+                return res.status(409).json({err: "Doctor already Exists"})
             }
             else{
                 //generatig new object
@@ -42,6 +42,7 @@ const reg_doctor = async (req, res)=>{
     
         }catch(err){
             console.log(err)
+            res.status(400).json({message : "Some error occured"})
         }
     
     } 

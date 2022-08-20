@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 
 
-const reg_medStore = async (req, res)=>{
+const reg_pharmacy = async (req, res)=>{
     const { license_num, storeName, storeOwner, email, contact_number, address, password } = req.body
 
     //check if any field are empty
@@ -46,7 +46,7 @@ const reg_medStore = async (req, res)=>{
 
 }
 
-const login_medStore = async (req, res)=>{
+const login_pharmacy = async (req, res)=>{
     const { username, password } = req.body
 
     const license_num = username;
@@ -91,4 +91,4 @@ const login_medStore = async (req, res)=>{
 
 }
 
-module.exports = { reg_medStore, login_medStore }
+module.exports = { reg_pharmacy, login_pharmacy }

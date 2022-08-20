@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const validator = require('validator')
 
 
-const medStoreSchema = {
+const pharmacySchema = {
     license_num:{
         type: String,
         required: true
@@ -18,12 +18,6 @@ const medStoreSchema = {
     email:{
         type: String,
         required: true,
-        validate(value){
-            if(!validator.isEmail(value)){
-                throw new Error("invalid email!")
-            }
-        }
-
     },
     contact_number:{
         type: Number,
@@ -39,6 +33,6 @@ const medStoreSchema = {
     }
 }
 
-const medStore = mongoose.model('medStore', medStoreSchema)
+const medStore = mongoose.model('medStore', pharmacySchema)
 
 module.exports = medStore

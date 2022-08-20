@@ -18,7 +18,7 @@ const reg_patient = async (req, res)=>{
             console.log(patientExist)
             //check if health_id already registered.
             if(patientExist){
-                return res.status(404).json({err: "Patient already Exists"})
+                return res.status(409).json({err: "Patient already Exists"})
             }
             else{
                 //generatig new object
@@ -41,7 +41,7 @@ const reg_patient = async (req, res)=>{
     
         }catch(err){
             console.log(err)
-            res.status(400).json({"error": err})
+            res.status(400).json({err: err})
         }
     
     } 
