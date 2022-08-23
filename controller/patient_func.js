@@ -67,11 +67,12 @@ const login_patient = async (req, res) => {
                 if(validPatient){
                     const token = await jwt.sign(existingPatient.toJSON(), process.env.secret_k)
                     console.log("patient token created")
+                    
 
                     return res
                         .cookie('jwttoken', token, {
                             httpOnly : true,
-                            expires: new Date(Date.now() + 8640000) //expiry is for one day
+                            // expires: new Date(Date.now() + 8640000) //expiry is for one day
                         })
                         .status(200)
                         .json({message:"Patient logged in successfully!"})

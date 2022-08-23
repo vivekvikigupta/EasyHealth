@@ -33,6 +33,6 @@ const pharmacySchema = {
     }
 }
 
-const medStore = mongoose.model('medStore', pharmacySchema)
+const pharma = mongoose.model('medStore', pharmacySchema)
 
-module.exports = medStore
+module.exports = pharma

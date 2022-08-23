@@ -1,4 +1,4 @@
-const medStore = require('../model/medStoreSchema')
+const pharma = require('../model/pharmacySchema')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -15,15 +15,15 @@ const reg_pharmacy = async (req, res)=>{
         try{
 
             //check for license_num , if it already exist
-            const medStoreExist = await medStore.findOne({license_num: license_num})
+            const pharmaExist = await pharma.findOne({license_num: license_num})
     
             //check if license_num already registered.
-            if(medStoreExist){
+            if(pharmaExist){
                 return res.status(404).json({err: "Store already registered !"})
             }
             else{
                 //generatig new object
-                const medstore = new medStore({ license_num, storeName, storeOwner, email, contact_number, address, password })
+                const medstore = new pharma({ license_num, storeName, storeOwner, email, contact_number, address, password })
 
                 //hashing the password
 
@@ -40,6 +40,7 @@ const reg_pharmacy = async (req, res)=>{
     
         }catch(err){
             console.log(err)
+            res.status(400).json(err)
         }
     
     } 
@@ -57,7 +58,7 @@ const login_pharmacy = async (req, res)=>{
     }
     else{
         try{
-            const existingmedStore = await medStore.findOne({license_num : license_num})
+            const existingmedStore = await pharma.findOne({license_num : license_num})
 
             if(existingmedStore){
                 //checking password
@@ -67,7 +68,7 @@ const login_pharmacy = async (req, res)=>{
 
                     //generating token
                     const token = await jwt.sign(existingmedStore.toJSON(), process.env.secret_k)
-                    console.log("medStore token created.")
+                    console.log("pharma token created.")
 
                     return res
                         .cookie('jwttoken', token, {

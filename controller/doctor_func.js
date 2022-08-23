@@ -76,7 +76,7 @@ const login_doctor = async (req, res) => {
                     return res
                         .cookie("jwttoken", token, {
                             httpOnly : true,
-                            expires: new Date(Date.now() + 8640000) //expiry is for one day
+                            // expires: new Date(Date.now() + 86400000000) //expiry is for one day
 
                         })
                         .status(200)
