@@ -13,7 +13,7 @@ const PORT = process.env.PORT
 app.use(cookieparser())
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended : false}))
-app.use(cors())
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 require('./db/conn')
 
 //this will route all urls
