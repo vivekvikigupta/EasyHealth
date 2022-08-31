@@ -4,6 +4,8 @@ const add_prescriptions = require('../controller/prescription')
 const getAll_patients = require('../controller/getAll_patients.js')
 const {patient_pres_rec, patient_detail} = require('../controller/getPatientRecord')
 const Authenticate  = require('../middlewares/authenticate')
+const bookappointment = require('../controller/bookappointment')
+const checkappointments = require('../controller/checkappointments')
 
 
 
@@ -12,4 +14,6 @@ router.get('/getAll_patients', getAll_patients)
 router.get('/patient_pres_rec/:hid', patient_pres_rec )
 router.get('/patient_detail/:hid', patient_detail )
 
+router.post('/bookappointment', bookappointment)
+router.get('/appointments', checkappointments)
 module.exports = router

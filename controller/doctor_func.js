@@ -58,7 +58,7 @@ const login_doctor = async (req, res) => {
     console.log(registration_num, password)
     //check if fields are empty
     if( !registration_num || !password ){
-        return res.status(404).json({err:"Please fill the field"})
+        return res.status(404).json({error:"Please fill the field"})
     }
     else{
         try{
