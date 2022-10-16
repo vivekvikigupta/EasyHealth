@@ -7,10 +7,10 @@ const patient_profile = async (req, res) => {
 
     const token = req.cookies.jwttoken;
 
-    if(!token){
-        console.log("token not found")
-        return res.status(403).send({message: "please login first"}); 
-    }
+    // if(!token){
+    //     console.log("token not found")
+    //     return res.status(403).send({message: "please login first"}); 
+    // }
 
     try {
         
