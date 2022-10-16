@@ -6,7 +6,7 @@ const {patient_pres_rec, patient_detail} = require('../controller/getPatientReco
 const Authenticate  = require('../middlewares/authenticate')
 const bookappointment = require('../controller/bookappointment')
 const checkappointments = require('../controller/checkappointments')
-
+const patientProfile = require('../controller/patientprofile')
 
 
 router.post('/add_prescriptions', add_prescriptions)
@@ -16,4 +16,5 @@ router.get('/patient_detail/:hid', patient_detail )
 
 router.post('/bookappointment', bookappointment)
 router.get('/appointments', checkappointments)
+router.get('/patientprofile', patientProfile)
 module.exports = router
