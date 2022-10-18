@@ -47,50 +47,50 @@ const reg_patient = async (req, res)=>{
     } 
 }
 
-const login_patient = async (req, res) => {
-    const { username, password } = req.body
-    //health_id used as username
-    const health_id = username
+// const login_patient = async (req, res) => {
+//     const { username, password } = req.body
+//     //health_id used as username
+//     const health_id = username
 
-    //check if fields are empty
-    if( !health_id || !password ){
-        return res.status(404).json({error:"Please fill the field"})
-    }
-    else{
-        try{
-            const existingPatient = await Patient.findOne({health_id : health_id})
+//     //check if fields are empty
+//     if( !health_id || !password ){
+//         return res.status(404).json({error:"Please fill the field"})
+//     }
+//     else{
+//         try{
+//             const existingPatient = await Patient.findOne({health_id : health_id})
 
-            if(existingPatient){
-                //checking password
-                const validPatient = await bcrypt.compare(password, existingPatient.password)
+//             if(existingPatient){
+//                 //checking password
+//                 const validPatient = await bcrypt.compare(password, existingPatient.password)
                 
-                if(validPatient){
-                    const token = await jwt.sign(existingPatient.toJSON(), process.env.secret_k)
-                    console.log("patient token created")
+//                 if(validPatient){
+//                     const token = await jwt.sign(existingPatient.toJSON(), process.env.secret_k)
+//                     console.log("patient token created")
                     
 
-                    return res
-                        .cookie('jwttoken', token, {
-                            httpOnly : true,
-                            SameSite: 'None',
-                            Secure : true,
-                            expires: new Date(Date.now() + 8640000) //expiry is for one day
-                        })
-                        .status(200)
-                        .json({message:"Patient logged in successfully!"})
-                }else {
-                    res.status(400).json({ error: "Invalid Password" });
-                }
-            }
-            else{
-                res.status(404).json({ error:"Patient not registered!" })
-            }
+//                     return res
+//                         .cookie('jwttoken', token, {
+//                             httpOnly : true,
+//                             SameSite: 'None',
+//                             Secure : true,
+//                             expires: new Date(Date.now() + 8640000) //expiry is for one day
+//                         })
+//                         .status(200)
+//                         .json({message:"Patient logged in successfully!"})
+//                 }else {
+//                     res.status(400).json({ error: "Invalid Password" });
+//                 }
+//             }
+//             else{
+//                 res.status(404).json({ error:"Patient not registered!" })
+//             }
 
-        }catch(err){
-            console.log(err)
-            res.status(400).json({"error": err})
-        }
-    }
-}
+//         }catch(err){
+//             console.log(err)
+//             res.status(400).json({"error": err})
+//         }
+//     }
+// }
 
-module.exports = { reg_patient, login_patient }
+module.exports = { reg_patient }
