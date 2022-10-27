@@ -10,27 +10,39 @@ const secret_key = process.env.secret_k
 
 const login = async(req, res)=>{
 
-    const {username, password} = req.body //username recieved contains userid+c+category of role 
-    console.log(username, password)
+    const {role, username, password} = req.body 
+    console.log(role, username, password)
 
-    const userid = username.split('c')[0]
-    const category = username.split('c')[1]
-    console.log(userid, category)
-
+    const userid = username;
     var existingUser;
 
-    if(category === '1'){
-        //for doctor
-        existingUser = await Doctor.findOne({registration_num : userid})
+    try {
+        
+        if(role === 1){
+            //for doctor
+            existingUser = await Doctor.findOne({registration_num : userid})
+            console.log("Doctor role")
+        }
+        else if(role === 2){
+            //for patient
+            existingUser = await Patient.findOne({health_id : Number(userid)})
+        }
+        else if(role === 3){
+            //for Pharmacy
+            existingUser = await Pharmacy.findOne({license_num : userid})
+        }
+        else{
+            existingUser = false
+            throw new Error("Role does not exists !")
+        }
+
+    } catch (error) {
+        console.log(res.message)
+        return res
+            .status(400)
+            .json({error : error.message})
     }
-    else if(category === '2'){
-        //for patient
-        existingUser = await Patient.findOne({health_id : Number(userid)})
-    }
-    else{
-        //for Pharmacy
-        existingUser = await Pharmacy.findOne({license_num : userid})
-    }
+
 
     try {
 
