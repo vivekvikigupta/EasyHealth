@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt')
 
 const secret_key = process.env.secret_k
 
-
 const login = async(req, res)=>{
 
     const {role, username, password} = req.body 
@@ -17,24 +16,41 @@ const login = async(req, res)=>{
     var existingUser;
 
     try {
+
+        switch(role){
+            case 1 : //for doctor
+                    existingUser = await Doctor.findOne({registration_num : userid});
+                    break;
+            case 2 : 
+                    //for Patient
+                    existingUser = await Patient.findOne({health_id : Number(userid)})
+                    break;
+            case 3 :
+                    //for Pharmacy
+                    existingUser = await Pharmacy.findOne({license_num : userid})
+                    break;
+            default : //incase role not registered
+                    existingUser = false
+                    throw new Error("Role does not exists !")
+                    
+        }
         
-        if(role === 1){
-            //for doctor
-            existingUser = await Doctor.findOne({registration_num : userid})
-            console.log("Doctor role")
-        }
-        else if(role === 2){
-            //for patient
-            existingUser = await Patient.findOne({health_id : Number(userid)})
-        }
-        else if(role === 3){
-            //for Pharmacy
-            existingUser = await Pharmacy.findOne({license_num : userid})
-        }
-        else{
-            existingUser = false
-            throw new Error("Role does not exists !")
-        }
+        // if(role === 1){
+        //     //for doctor
+        //     existingUser = await Doctor.findOne({registration_num : userid});
+        // }
+        // else if(role === 2){
+        //     //for patient
+        //     existingUser = await Patient.findOne({health_id : Number(userid)})
+        // }
+        // else if(role === 3){
+        //     //for Pharmacy
+        //     existingUser = await Pharmacy.findOne({license_num : userid})
+        // }
+        // else{
+        //     existingUser = false
+        //     throw new Error("Role does not exists !")
+        // }
 
     } catch (error) {
         console.log(res.message)
