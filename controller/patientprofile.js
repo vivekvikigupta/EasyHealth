@@ -20,10 +20,20 @@ const patient_profile = async (req, res) => {
         console.log(patient_data)
 
         var allpres = await prescription.find({health_id : user.health_id})
-        allpres = allpres[0].prescriptions
-        console.log(allpres)
+        
 
-        return res.status(200).json({patient_data : patient_data[0], prescriptions : allpres})
+        if(allpres[0]){
+            
+            allpres = allpres[0].prescriptions
+            
+            return res.status(200).json({patient_data : patient_data[0], prescriptions : allpres})
+        }
+        else{
+            console.log("No prescription record for this patient yet.")
+            return res
+                    .status(200)//503
+                    .json({patient_data : patient_data[0], prescriptions : ""})
+        }
     } catch (error) {
         console.log(error)
         return res.status(404).json({error : "Some Error occured"})
