@@ -10,11 +10,15 @@ const patientSchema = new mongoose.Schema({
         type:String,
         required: true
     },
-    age:{
-        type:Number,
+    dob:{
+        type:String,
         required: true
     },
-    contact_number:{
+    email:{
+        type: String,
+        required : true
+    },
+    contact_num:{
         type: Number,
         required: true
     },

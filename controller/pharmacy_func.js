@@ -5,10 +5,10 @@ const jwt = require('jsonwebtoken')
 
 
 const reg_pharmacy = async (req, res)=>{
-    const { license_num, storeName, storeOwner, email, contact_number, address, password } = req.body
+    var { license_num, pharmacyName, pharmacyOwner, email, contact_num, address, password } = req.body
 
     //check if any field are empty
-    if( !license_num || !storeName || !storeOwner || !email || !contact_number || !address || !password ){
+    if( !license_num || !pharmacyName || !pharmacyOwner || !email || !contact_num || !address || !password ){
         res.status(404).json({err : "Please fill the field Property!"})
     }
     else{
@@ -19,21 +19,20 @@ const reg_pharmacy = async (req, res)=>{
     
             //check if license_num already registered.
             if(pharmaExist){
-                return res.status(404).json({err: "Store already registered !"})
+                console.log(`Pharmacy already registered : ${pharmaExist}`)
+                return res.status(404).json({err: "Pharmacy already registered !"})
             }
             else{
-                //generatig new object
-                const medstore = new pharma({ license_num, storeName, storeOwner, email, contact_number, address, password })
-
                 //hashing the password
 
-                //generating salt
+                //generating salt & replacing password to hashed password
                 const salt = await bcrypt.genSalt(12)
+                password = await bcrypt.hash(password, salt)
 
-                //replacing password to hashed password
-                medstore.password = await bcrypt.hash(medstore.password, salt)
+                //generatig new object
+                const pharmaModel = new pharma({ license_num, pharmacyName, pharmacyOwner, email, contact_num, address, password })
 
-                await medstore.save()
+                await pharmaModel.save()
                 res.status(200).json({message: "Store registered Successfully"})
                 console.log("a item added to database.")
             }

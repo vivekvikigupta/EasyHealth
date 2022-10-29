@@ -7,11 +7,11 @@ const pharmacySchema = {
         type: String,
         required: true
     },
-    storeName:{
+    pharmacyName:{
         type: String,
         required: true
     },
-    storeOwner:{
+    pharmacyOwner:{
         type: String,
         required: true
     },
@@ -19,7 +19,7 @@ const pharmacySchema = {
         type: String,
         required: true,
     },
-    contact_number:{
+    contact_num:{
         type: Number,
         required: true
     },
@@ -33,6 +33,6 @@ const pharmacySchema = {
     }
 }
 
-const pharma = mongoose.model('medStore', pharmacySchema)
+const pharma = mongoose.model('pharma_store', pharmacySchema)
 
 module.exports = pharma

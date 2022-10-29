@@ -7,10 +7,10 @@ const jwt = require('jsonwebtoken')
 const secret_key = process.env.secret_k
 
 const reg_doctor = async (req, res)=>{
-    const { registration_num, name, speciality, contact_number, address, password } = req.body
+    var { registration_num, name, speciality, email, contact_number, address, password } = req.body
 
     //check if any field are empty
-    if(!registration_num || !name || !speciality || !contact_number || !address || !password){
+    if(!registration_num || !name || !speciality || !email || !contact_number || !address || !password){
         res.status(404).json({err : "Please fill the field Property!"})
     }
     else{
@@ -24,16 +24,14 @@ const reg_doctor = async (req, res)=>{
                 return res.status(409).json({err: "Doctor already Exists"})
             }
             else{
-                //generatig new object
-                const doctor = new Doctor({ registration_num, name, speciality, contact_number, address, password })
-
                 //hashing the password
 
-                //generating salt
+                //generating salt & replacing password to hashed password
                 const salt = await bcrypt.genSalt(12)
-
-                //replacing password to hashed password
-                doctor.password = await bcrypt.hash(doctor.password, salt)
+                password = await bcrypt.hash(password, salt)
+                
+                //generatig new object
+                const doctor = new Doctor({ registration_num, name, speciality, email, contact_number, address, password })
 
                 await doctor.save()
                 res.status(200).json({message: "Doctor registered Successfully"})

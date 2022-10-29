@@ -4,33 +4,31 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const reg_patient = async (req, res)=>{
-    const {health_id, name, age, contact_number, address, password} = req.body
+    var {health_id, name, dob, email, contact_num, address, password} = req.body
 
     //check if any field are empty
-    if(!health_id || !name || !age || !contact_number || !address || !password){
+    if(!health_id || !name || !dob || !email || !contact_num || !address || !password){
         res.status(404).json({err : "Please fill the field Property!"})
     }
     else{
         try{
-
             //check for health_id , if it already exist
             const patientExist = await Patient.findOne({health_id: health_id})
-            console.log(patientExist)
+            
             //check if health_id already registered.
             if(patientExist){
+                console.log(patientExist)
                 return res.status(409).json({err: "Patient already Exists"})
             }
             else{
-                //generatig new object
-                const patient = new Patient({health_id, name, age, contact_number, address, password})
-
                 //hashing the password
 
-                //generating salt
+                //generating salt & replacing password to hashed password
                 const salt = await bcrypt.genSalt(12)
-
-                //replacing password to hashed password
-                patient.password = await bcrypt.hash(patient.password, salt)
+                password = await bcrypt.hash(password, salt)
+                
+                //generatig new object
+                const patient = new Patient({health_id, name, dob, email, contact_num, address, password})
 
                 await patient.save(()=>{
                     console.log("patient added to database.")
