@@ -16,7 +16,7 @@ const patient_profile = async (req, res) => {
         
         const user = jwt.verify(token, secret_key)
     
-        const patient_data = await patient.find({health_id : user.health_id}, {health_id : 1, name : 1, age : 1, contact_number : 1})
+        const patient_data = await patient.find({health_id : user.health_id}, {health_id : 1, name : 1, dob : 1, email : 1, contact_num : 1, address : 1})
         console.log(patient_data)
 
         var allpres = await prescription.find({health_id : user.health_id})
