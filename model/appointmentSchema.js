@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const appointmentSchema = mongoose.Schema({
     appointment_id : {
         type : Number,
-        require : true
+        require : true,
+        default : 0
     },
     appointment_num : {
         type : Number,
