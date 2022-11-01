@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const doctorModel = require('../model/doctorSchema')
+const doctor = require('../model/doctorSchema')
 const appointmentModel = require('../model/appointmentSchema') 
 
 const secret_key = process.env.secret_k
@@ -11,21 +11,27 @@ const checkappointments = async (req, res)=>{
         //take data in headers
         const token = req.cookies.jwttoken
         
-        var querydate = Date.parse(req.query.date)
-        querydate = new Date(querydate)
+        var qDate = new Date(req.query.date)
+        console.log(qDate)
+
+        const nxtDate = new Date(qDate.setDate(qDate.getDate() + 1))
+        const preDate = new Date(qDate.setDate(qDate.getDate() - 2))
+        console.log(nxtDate )
+        console.log(preDate )
         
-        console.log(querydate)
+        
         
         const userData = jwt.decode(token, secret_key)
+        console.log(userData)
         
-        const validateDoc = await doctorModel.find({registration_num : userData.registration_num})
+        const validateDoc = await doctor.find({registration_num : userData.registration_num})
     
         if(validateDoc){
             // console.log(validateDoc)
 
             //after validating the doctor, fetch details of current appointments
-            const filter = [{$match : {date : {$eq : querydate}}}]
-            const currentapp = await appointmentModel.aggregate(filter)
+            const filter = {date : {$gt : preDate, $lt: nxtDate}, doc_reg_num : {$eq : userData.registration_num}}
+            const currentapp = await appointmentModel.aggregate([{$match : filter}])
             console.log(currentapp)
 
             res

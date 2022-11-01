@@ -19,7 +19,7 @@ router.get('/patient_pres_rec/:hid', patient_pres_rec )
 router.get('/patient_detail/:hid', patient_detail )
 
 router.post('/bookappointment', bookappointment)
-router.get('/appointments', checkappointments)
+router.get('/cappointments', checkappointments)
 router.get('/patientprofile', Authorize(["patient"]), patientProfile)
 module.exports = router
 

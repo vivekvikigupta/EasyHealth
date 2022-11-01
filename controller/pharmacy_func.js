@@ -7,8 +7,19 @@ const jwt = require('jsonwebtoken')
 const reg_pharmacy = async (req, res)=>{
     var { license_num, pharmacyName, pharmacyOwner, email, contact_num, address, password } = req.body
 
+     //in case of space only -- filtering them out
+     var iflag = false
+     Object.values(req.body).map((i)=>{
+         var s = i.toString();
+         s = s.replace(/ /g,"");
+         if(s.length === 0){
+             iflag = true
+             console.log("Found empty field")
+         }
+     })
+
     //check if any field are empty
-    if( !license_num || !pharmacyName || !pharmacyOwner || !email || !contact_num || !address || !password ){
+    if(iflag){
         res.status(404).json({err : "Please fill the field Property!"})
     }
     else{

@@ -9,8 +9,19 @@ const secret_key = process.env.secret_k
 const reg_doctor = async (req, res)=>{
     var { registration_num, name, speciality, email, contact_number, address, password } = req.body
 
+    //in case of space only -- filtering them out
+    var iflag = false
+    Object.values(req.body).map((i)=>{
+        var s = i.toString();
+        s = s.replace(/ /g,"");
+        if(s.length === 0){
+            iflag = true
+            console.log("Found empty field")
+        }
+    })
+
     //check if any field are empty
-    if(!registration_num || !name || !speciality || !email || !contact_number || !address || !password){
+    if(iflag){
         res.status(404).json({err : "Please fill the field Property!"})
     }
     else{
