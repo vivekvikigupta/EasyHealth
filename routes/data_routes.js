@@ -7,6 +7,7 @@ const Authorize  = require('../middlewares/authorize')
 const bookappointment = require('../controller/bookappointment')
 const checkappointments = require('../controller/checkappointments')
 const patientProfile = require('../controller/patientprofile')
+const getdoctor  = require('../controller/getdoctor')
 
 
 
@@ -18,8 +19,10 @@ router.get('/getAll_patients', getAll_patients)
 router.get('/patient_pres_rec/:hid', patient_pres_rec )
 router.get('/patient_detail/:hid', patient_detail )
 
-router.post('/bookappointment', bookappointment)
+router.post('/bookappointment', Authorize(["doctor", "patient", "pharmacy"]), bookappointment)
 router.get('/cappointments', checkappointments)
 router.get('/patientprofile', Authorize(["patient"]), patientProfile)
+router.get('/getdoctor',Authorize(["doctor", "patient", "pharmacy"]), getdoctor )
+
 module.exports = router
 

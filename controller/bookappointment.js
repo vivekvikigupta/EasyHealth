@@ -1,11 +1,16 @@
+const { replaceOne } = require('../model/appointmentSchema');
 const appointment = require('../model/appointmentSchema');
 const Doctor = require('../model/doctorSchema')
 const Patient = require('../model/patientSchema')
 
 const bookappointment = async (req, res)=>{
     
-    var {appointment_id, appointment_num, date, doc_reg_num, patient_health_id} = req.body;
-
+    var {date, doc_reg_num} = req.body;
+    var patient_health_id = req.userInfo.uid
+    var name = req.userInfo.name
+    //replacing / with - for date valid format
+    var d = date.split('/')
+    date = `${d[2]}-${d[1]}-${d[0]}`
     //formating date
     date = Date.parse(date)
     date = new Date(date)
@@ -14,26 +19,24 @@ const bookappointment = async (req, res)=>{
         //check for doc & patient existance
         const docE = await Doctor.findOne({registration_num : doc_reg_num})
         const PatientE = await Patient.findOne({health_id : patient_health_id})
-        
-
-        if(docE && PatientE){
-            //if both exists
-    
+       
+        if(docE && PatientE){//if both exists
+            
             //selecting appointment number on a specific date
             const filter = { date : {$eq : date}, doc_reg_num : { $eq : doc_reg_num} }
             const app_filter = await appointment.aggregate([{$match : filter}])
     
-            appointment_num = app_filter.length + 1
+            const appointment_num = app_filter.length + 1
     
-            const app_doc = new appointment({appointment_id, appointment_num, date, doc_reg_num, patient_health_id})
+            const app_doc = new appointment({appointment_num, date, doc_reg_num, patient_health_id})
             await app_doc.save()
     
             const bookedDate = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`
-            console.log(`Appointment booked on ${bookedDate} with appointment number : ${appointment_num}`)
+            console.log(`Booked for ${bookedDate} with doctor ${docE.name}(${docE.registration_num}) appointment number : ${appointment_num} for ${name} (id : ${patient_health_id})`)
     
             res
              .status(200)
-             .json({message :`Appointment booked on ${bookedDate} with doctor ${docE.name} & appointment number : ${appointment_num}`})
+             .json({message :`Booked for ${bookedDate} with doctor ${docE.name}(${docE.registration_num}) appointment number : ${appointment_num} for ${name} (id : ${patient_health_id})`})
         }
         else{
             throw new Error("Doctor or patient doesn't exists")
