@@ -6,7 +6,6 @@ const Authenticate = (roles)=>{
     return async (req, res, next)=>{
         //getting cookie
         const token = req.cookies.jwttoken
-
         //if no token found
         if(!token){
             console.log("token not found")
@@ -18,22 +17,30 @@ const Authenticate = (roles)=>{
                 
                 //fetching role for logged in user
                 var role;
-                if(decode.health_id)
-                    role = "patient"
-                else if(decode.registration_num)
-                    role = "doctor"
-                else
+                var uid;
+                
+                if(decode.health_id){
+                    role = "patient";
+                    uid = decode.health_id;
+                }
+                else if(decode.registration_num){
+                    role = "doctor";
+                    uid = decode.registration_num;
+                }
+                else{
                     role = "pharmacy"
+                    uid = decode.license_num;
+                }
                 
                 //authorising to roles
                 if(roles.includes(role)){
-                    console.log("You have permission")
+                    console.log(`Authorised for ${role}`)
+                    req.userInfo = {uid, name : decode.name}
                 }
                 else{
                     console.log("You don't have permission")
                     return res.status(401).json({msg : "Unauthorised user. Access Denied"})
                 }
-            
             next()
             })
         } catch (error) {
