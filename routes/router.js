@@ -7,9 +7,6 @@ const { reg_pharmacy } = require('../controller/pharmacy_func')
 const login = require('../middlewares/authenticate')
 
 
-router.get('/', (req, res)=>{
-    res.json("Hello from router server")
-})
 
 //routes for user registration
 router.post('/reg_patient', reg_patient)

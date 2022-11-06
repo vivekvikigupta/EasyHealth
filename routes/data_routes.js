@@ -20,7 +20,7 @@ router.get('/patient_pres_rec/:hid', patient_pres_rec )
 router.get('/patient_detail/:hid', patient_detail )
 
 router.post('/bookappointment', Authorize(["doctor", "patient", "pharmacy"]), bookappointment)
-router.get('/cappointments', checkappointments)
+router.get('/chckappointments',Authorize(["doctor"]), checkappointments)
 router.get('/patientprofile', Authorize(["patient"]), patientProfile)
 router.get('/getdoctor',Authorize(["doctor", "patient", "pharmacy"]), getdoctor )
 
