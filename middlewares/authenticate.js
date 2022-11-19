@@ -16,7 +16,6 @@ const login = async(req, res)=>{
     var existingUser;
 
     try {
-
         switch(role){
             case 1 : //for doctor
                     existingUser = await Doctor.findOne({registration_num : userid});
@@ -32,25 +31,7 @@ const login = async(req, res)=>{
             default : //incase role not registered
                     existingUser = false
                     throw new Error("Role does not exists !")
-                    
         }
-        
-        // if(role === 1){
-        //     //for doctor
-        //     existingUser = await Doctor.findOne({registration_num : userid});
-        // }
-        // else if(role === 2){
-        //     //for patient
-        //     existingUser = await Patient.findOne({health_id : Number(userid)})
-        // }
-        // else if(role === 3){
-        //     //for Pharmacy
-        //     existingUser = await Pharmacy.findOne({license_num : userid})
-        // }
-        // else{
-        //     existingUser = false
-        //     throw new Error("Role does not exists !")
-        // }
 
     } catch (error) {
         console.log(res.message)
@@ -59,7 +40,6 @@ const login = async(req, res)=>{
             .json({error : error.message})
     }
 
-
     try {
 
         if(existingUser){
@@ -67,21 +47,18 @@ const login = async(req, res)=>{
             if(validUser){
                 const token = jwt.sign(existingUser.toJSON(), secret_key)
                 console.log("User token created")
-
                 return res
                     .cookie("jwttoken", token, {
                         httpOnly : true,
                         SameSite: 'None',
                         Secure : true,
                         expires: new Date(Date.now() + 8640000),
-                       
                     })
                     .status(200)
                     .json({message:"User logged in successfully!"})
             }
             else{
                 throw new Error("Invalid Password")
-                
                 // res.status(400).json({ error: "Invalid Password" });
             } 
         }
@@ -98,7 +75,6 @@ const login = async(req, res)=>{
         .status(400)
         .json({error: error.message})
     }
-    
 }
 
 module.exports = login

@@ -1,7 +1,6 @@
-const { replaceOne } = require('../model/appointmentSchema');
-const appointment = require('../model/appointmentSchema');
-const Doctor = require('../model/doctorSchema')
-const Patient = require('../model/patientSchema')
+const appointment = require('../../model/appointmentSchema');
+const Doctor = require('../../model/doctorSchema')
+const Patient = require('../../model/patientSchema')
 
 const bookappointment = async (req, res)=>{
     

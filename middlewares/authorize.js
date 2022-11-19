@@ -35,7 +35,7 @@ const Authenticate = (roles)=>{
                 //authorising to roles
                 if(roles.includes(role)){
                     console.log(`Authorised for ${role}`)
-                    req.userInfo = {uid, name : decode.name}
+                    req.userInfo = {uid, name : decode.name, role}
                 }
                 else{
                     console.log("You don't have permission")

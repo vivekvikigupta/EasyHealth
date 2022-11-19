@@ -3,6 +3,7 @@ const prescription = require("../model/prescriptionSchema")
 const jwt = require('jsonwebtoken')
 const secret_key = process.env.secret_k
 
+//only for doctor
 const patient_profile = async (req, res) => {
 
     const token = req.cookies.jwttoken;
@@ -24,7 +25,8 @@ const patient_profile = async (req, res) => {
 
         if(allpres[0]){
             
-            allpres = allpres[0].prescriptions
+            allpres = (allpres[0].prescriptions).sort((a, b) =>b.date - a.date)
+            console.log(allpres)
             
             return res.status(200).json({patient_data : patient_data[0], prescriptions : allpres})
         }

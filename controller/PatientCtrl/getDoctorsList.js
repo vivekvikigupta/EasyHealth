@@ -1,8 +1,8 @@
 // this route is for providing all doctors available in while app booking in a specific category
 
-const doctor = require('../model/doctorSchema')
+const doctor = require('../../model/doctorSchema')
 
-const getdoctor = async (req, res) =>{
+const getDoctorsList = async (req, res) =>{
     const sp= req.query.sp
     console.log(sp)
     
@@ -29,4 +29,4 @@ try {
 
 }
 
-module.exports = getdoctor
+module.exports = getDoctorsList
