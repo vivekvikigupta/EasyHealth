@@ -54,7 +54,7 @@ const checkappointments = async (req, res)=>{
 
         else if(role === 'doctor' && qpDate && qnDate){
             
-            const dafilter = {date : {$gt : qpDate, $lt: qnDate}, registration_num : {$eq : uid}}
+            const dafilter = {date : {$gt : qpDate, $lt: qnDate}, doc_reg_num : {$eq : uid}}
             const app_lst = await appointmentModel.aggregate([{$match : dafilter}]);
             console.log(app_lst)
 
