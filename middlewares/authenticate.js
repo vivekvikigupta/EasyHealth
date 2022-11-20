@@ -52,7 +52,7 @@ const login = async(req, res)=>{
                         httpOnly : true,
                         SameSite: 'None',
                         Secure : true,
-                        expires: new Date(Date.now() + 8640000),
+                        expires: new Date(Date.now() + 86400000),
                     })
                     .status(200)
                     .json({message:"User logged in successfully!"})

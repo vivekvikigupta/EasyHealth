@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const add_prescriptions = require('../controller/prescription')
+const add_prescriptions = require('../controller/DoctorCtrls/add_prescription')
 const {patient_pres_rec} = require('../controller/PatientCtrl/PatientPresRecord')
 const Authorize  = require('../middlewares/authorize')
 const bookappointment = require('../controller/PatientCtrl/bookappointment')
-const checkappointments = require('../controller/checkappointments')
+const checkappointments = require('../controller/common/checkappointments')
 
 const getdoctorslist  = require('../controller/PatientCtrl/getDoctorsList')
 const profile = require('../controller/common/profile')
@@ -22,7 +22,7 @@ router.get('/getdoctor',Authorize(["doctor", "patient", "pharmacy"]), getdoctors
 //routes for doctors
 
 router.post('/add_prescriptions', add_prescriptions)
-router.get('/chckappointments',Authorize(["doctor"]), checkappointments)
+router.get('/checkappointments',Authorize(["doctor", "patient"]), checkappointments)
 
 //common routes
 router.get('/patient_pres_rec/', Authorize(["doctor", "patient"]), patient_pres_rec )

@@ -1,6 +1,6 @@
 
-const prescription_model = require('../model/prescriptionSchema')
-const patient = require('../model/patientSchema')
+const prescription_model = require('../../model/prescriptionSchema')
+const patient = require('../../model/patientSchema')
 
 
 const add_prescription = async (req, res)=>{
