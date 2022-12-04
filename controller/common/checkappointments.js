@@ -49,7 +49,7 @@ const checkappointments = async (req, res)=>{
 
             return res
                 .status(200)
-                .json(app_lst)
+                .json({app_lst : app_lst})
         }
 
         else if(role === 'doctor' && qpDate && qnDate){
@@ -60,7 +60,7 @@ const checkappointments = async (req, res)=>{
 
             return res
                 .status(200)
-                .json(app_lst)
+                .json({app_lst : app_lst})
         }
         else{
             throw Error("Some Error with role or data fetching from database.")

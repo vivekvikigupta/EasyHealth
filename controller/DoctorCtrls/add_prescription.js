@@ -20,37 +20,29 @@ const add_prescription = async (req, res)=>{
 
         if(patient_exists && patient_pres_rec){
             //if patient record exists already -- update the precriptions array
-            
-            console.log("pahle se hi hai bhai")
-
-            // patient_pres_rec.prescriptions.push(prescription_data)
-            // patient_pres_rec.save(()=>{
-            //     console.log("updated")
-            // })
+            console.log("prescription exits, so updatin record")
 
             prescription_model.findOneAndUpdate({health_id : health_id}, {$push : {prescriptions : prescription_data}}, ()=>{
                 console.log("prescriptions updated")
             })
-            res.status(200).send("ok")
+            res.status(200).json({message : "Updated prescription record"})
         }
-
             //in case rec does not exists, create first record of precriptions
         else if(patient_exists && !patient_pres_rec){
-            
-            const pres_obj = new prescription_model({health_id : health_id, prescriptions : [prescription_data]})
 
+            const pres_obj = new prescription_model({health_id : health_id, prescriptions : [prescription_data]})
             //always remember below line in nested schemas, this really irritated me***
             pres_obj.markModified('prescriptions')
 
             await pres_obj.save((err)=>{
                 if(err){
-                    console.log(err)
+                    throw Error(err)
                 }
                 else{
                     console.log("Fisrt Record for patient added successfully")
                 }
             })
-            res.status(200).send("ok")
+            res.status(200).send("First prescription added")
         }
          
         else{

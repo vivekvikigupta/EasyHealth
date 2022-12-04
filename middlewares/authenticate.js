@@ -55,7 +55,7 @@ const login = async(req, res)=>{
                         expires: new Date(Date.now() + 86400000),
                     })
                     .status(200)
-                    .json({message:"User logged in successfully!"})
+                    .json({message:"User logged in successfully!", role : role, token : token})
             }
             else{
                 throw new Error("Invalid Password")

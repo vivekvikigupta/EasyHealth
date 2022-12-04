@@ -19,7 +19,11 @@ const patient_pres_rec = async(req, res)=>{
             throw Error("Unauthorised!")
         }
         
-        pres_rec = (pres_rec[0]).prescriptions.sort((a, b) =>b.date - a.date)
+        if(pres_rec[0]){
+            
+            pres_rec = (pres_rec[0]).prescriptions.sort((a, b) =>b.date - a.date)
+            
+        }
         console.log(pres_rec);
 
         return res
